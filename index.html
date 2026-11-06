@@ -1281,7 +1281,7 @@ body.night .defense-lab{
   };
   let step = 1;
   const selectedDocuments = new Set();
-  function showStep(n) {
+  function showStep(n, scrollToPanel = true) {
     step = Math.max(1,Math.min(4,n));
     cards.forEach(b => {
       const chosen = +b.dataset.defenseTab === step;
@@ -1294,7 +1294,7 @@ body.night .defense-lab{
     previous.hidden = step===1;
     next.innerHTML = step===4 ? 'Начать заново <span>↻</span>' : 'Следующий этап <span>→</span>';
     reveal.textContent = 'Показать правовой вывод';
-    document.getElementById('defense-panel-'+step)?.scrollIntoView({behavior:'smooth',block:'nearest'});
+    if (scrollToPanel) document.getElementById('defense-panel-'+step)?.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
   function message(n,text,positive) {
     const area = feedback[n];
@@ -1362,6 +1362,6 @@ body.night .defense-lab{
     if(step===4)document.getElementById('defense-final-summary').hidden=false;
     cards.forEach(b => b.classList.toggle('completed',completed.has(+b.dataset.defenseTab)));
   });
-  showStep(1);
+  showStep(1, false); // Инициализация без прокрутки: сайт открывается с главного экрана.
 })();
 </script></body></html>
